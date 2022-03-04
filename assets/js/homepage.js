@@ -80,6 +80,25 @@ var displayRepos = function(repos, searchTerm) {
         // container for repository gets title info stored in span element
         repoEl.appendChild(titleEl);
 
+        // we will add info regarding issues for the repositories
+        // create span element
+        var statusEl = document.createElement("span");
+        statusEl.classList = "flex-row align-center";
+        // check if current repo in array has issues
+        // we know the value for issues in gitHub is open_issues_count from devtools
+        if (repos[i].open_issues_count > 0) {
+            // if there are issues, we add an icon to the span element
+            // this icon has many classes
+            // we put an icon before our number of issues, followed by a string
+            statusEl.innerHTML = "<i class='fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + " issues(s)";
+        }
+        else {
+            statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
+        }
+
+        // we attach the status element to the container
+        repoEl.appendChild(statusEl);
+
         // then we attach repositories into the column that will hold them
         repoContainerEl.appendChild(repoEl);
     }
