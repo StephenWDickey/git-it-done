@@ -19,10 +19,20 @@ var getRepoName = function() {
     // the separator is '=', so ?repo=user/repo will become user/repo
     // we use [1] because the substring following '=' will be index=1
     var repoName = queryString.split("=")[1];
-    // now we must pass this value into the getRepoIssues function
-    getRepoIssues(repoName);
-    // we can attach repoName to span element in single-repo.html
-    repoNameEl.textContent = repoName;
+    // for error handling we will see if repo name is valid
+    if(repoName) {
+        // if name is valid, we attach name to container
+        repoNameEl.textContent = repoName;
+        // we must pass repoName value into getRepoIssues function
+        getRepoIssues(repoName);
+    }
+    // if repo name not valid
+    else {
+        // if not we will redirect to homepage
+        // .replace method redirects to location listed
+        document.location.replace("./index.html");
+
+    }
 }
 
 ///////////////////////////////////
@@ -41,8 +51,10 @@ var getRepoIssues = function(repo) {
                 }
             });
         }
+        // if api request fails, redirect to homepage
+        // remember that .replace method is useful for redirecting
         else {
-            alert("There was a problem retrieving your request");
+            document.location.replace("./index.html");
         };
     });
 };
