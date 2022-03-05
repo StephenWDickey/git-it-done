@@ -4,6 +4,8 @@
 // define some variable here
 // this targets div container we created in main area
 var issueContainerEl = document.querySelector("#issues-container");
+// element for repo name
+var repoNameEl = document.querySelector("#repo-name");
 // targets limit-warning container
 var limitWarningEl = document.querySelector("#limit-warning");
 
@@ -41,14 +43,22 @@ var displayIssues = function(issues) {
     };
 
     // for loop to access array data
-    for(i=0; i<issues.length; i++) {
+    for(var i = 0; i < issues.length; i++) {
         // a is a link element
         var issueEl = document.createElement("a");
         issueEl.classList = "list-item flex-row justify-space-between align-center";
         // we know html_url will give us the value we want to link to issue
-        issueEl.setAttribute("href", issues[i].html__url);
+        issueEl.setAttribute("href", issues[i].html_url);
         // this will open link in new tab
         issueEl.setAttribute("target", "_blank");
+        
+        // we create span to hold title element
+        var titleEl = document.createElement("span");
+        titleEl.textContent = issues[i].title;
+
+        // append title to issue element
+        issueEl.appendChild(titleEl);
+
 
         // now we will create a type element for our issues/pull requests
         var typeEl = document.createElement("span");
