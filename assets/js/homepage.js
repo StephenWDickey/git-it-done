@@ -26,7 +26,7 @@ var nameInputEl = document.querySelector("#username");
 
 // targets container for repos
 var repoContainerEl = document.querySelector("#repos-container");
-// targets header element above repo container
+// targets span element above repo container
 var repoSearchTerm = document.querySelector("#repo-search-term");
 /////////////////
 
@@ -101,6 +101,10 @@ var displayRepos = function(repos, searchTerm) {
 
         // then we attach repositories into the column that will hold them
         repoContainerEl.appendChild(repoEl);
+
+        // we are going to set up a second page so user can see issues
+        // this will be in single-repo.html
+        // we will also create a new js file
     }
 };
 
