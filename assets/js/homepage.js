@@ -1,5 +1,12 @@
 // script file for git-it-done
 
+
+// targets our language filter buttons
+var languageButtonsEl = document.querySelector("#language-buttons");
+
+
+/////////////////////////////
+
 // passing user into function will return data from many users, DYNAMIC
 var getUserRepos = function (user) { 
 
@@ -17,6 +24,29 @@ var getUserRepos = function (user) {
 
  
 };
+///////////////////////////////////////////
+
+// we are adding a function to further specify repo search
+// we want to search by coding language and also see repos that are featured
+var getFeaturedRepos = function(language) {
+    // we search repositories with language selected
+    // we have +is:featured qualifier
+    // additional query attached with &, we want issues where help is wanted
+    var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                // now we pass desired values into displayRepos function
+                displayRepos(data.items, language);
+            });
+        }
+        else {
+            alert("error: gitHub user not found");
+        }
+    });
+};
+
 
 ///////////////
 // targets html form
@@ -111,6 +141,28 @@ var displayRepos = function(repos, searchTerm) {
     }
 };
 
+//////////////////////////////////////////////////
+
+// function for language buttons
+var buttonClickHandler = function(event) {
+    event.preventDefault;
+    var language = event.target.getAttribute("data-language");
+    if (language) {
+        // we pass language value through getFeaturedRepos function
+        getFeaturedRepos(language);
+        // clears data from repoContainerEl
+        repoContainerEl.textContent = "";
+    }
+
+}
+
+///////////////////////////////////////////////////
+
+// event listener for language filter buttons
+languageButtonsEl.addEventListener("click", buttonClickHandler);
+
+
+////////////////////////////////////////////////////
 
 // event listener waits for submit, runs formSubmitHandler()
 // we add the event listener to the form element because of 'bubbling'
