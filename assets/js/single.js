@@ -8,7 +8,22 @@ var issueContainerEl = document.querySelector("#issues-container");
 var repoNameEl = document.querySelector("#repo-name");
 // targets limit-warning container
 var limitWarningEl = document.querySelector("#limit-warning");
+/////////////////////////////////////
 
+// new function to obtain repoName from original index.html page 
+// we must extract query value from query string
+var getRepoName = function() {
+    // gives us query string
+    var queryString = document.location.search;
+    // we use split method on queryString to obtain user/repo value
+    // the separator is '=', so ?repo=user/repo will become user/repo
+    // we use [1] because the substring following '=' will be index=1
+    var repoName = queryString.split("=")[1];
+    // now we must pass this value into the getRepoIssues function
+    getRepoIssues(repoName);
+    // we can attach repoName to span element in single-repo.html
+    repoNameEl.textContent = repoName;
+}
 
 ///////////////////////////////////
 // we will fetch issue data from gitHub API
@@ -100,5 +115,5 @@ var displayWarning = function(repo) {
 
 
 ////////////////////////////////////
-// hard coded to test script
-getRepoIssues("facebook/react");
+getRepoName();
+

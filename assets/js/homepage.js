@@ -66,10 +66,13 @@ var displayRepos = function(repos, searchTerm) {
         // owner for user, name for repository name
         var repoName = repos[i].owner.login + "/" + repos[i].name;
         
-        // each repository needs a container
-        var repoEl = document.createElement("div");
+        // each repository needs a container, this will be a link element
+        var repoEl = document.createElement("a");
         // we assign multiple classes to this container
         repoEl.classList = "list-item flex-row justify-space-between align-center";
+        // we set value of the link element to our issues page
+        // in our query string we set key repo = var repoName
+        repoEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
 
         // we will store repository name in span element
         var titleEl = document.createElement("span");
